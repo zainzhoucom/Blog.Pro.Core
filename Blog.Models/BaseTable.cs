@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Blog.EntityFramework
+namespace Blog.Models
 {
     public class BaseTable
     {
@@ -15,6 +15,13 @@ namespace Blog.EntityFramework
         [DisplayName("主键ID")]
         [Column("id", TypeName = "varchar(128)")]
         public string Id { get; set; }
+    }
+
+    public class BaseQueryListModel
+    {
+        public int page { get; set; }
+
+        public int size { get; set; }
     }
 
     /// <summary>
@@ -30,15 +37,5 @@ namespace Blog.EntityFramework
         /// 正常
         /// </summary>
         Normal = 1
-    }
-
-    public class ArticleRelationShip
-    {
-        public string ArticleId { get; set; }
-        public Articles Articles { get; set; }
-
-        public string TipId { get; set; }
-
-        public Tips Tips { get; set; }
     }
 }

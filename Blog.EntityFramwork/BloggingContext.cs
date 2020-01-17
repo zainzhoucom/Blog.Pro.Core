@@ -1,4 +1,5 @@
 ﻿
+using Blog.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.EntityFramework

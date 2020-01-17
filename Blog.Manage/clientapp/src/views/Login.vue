@@ -1,5 +1,8 @@
 <template>
-  <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
+  <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container" 
+    v-loading.fullscreen.lock="logining"
+    element-loading-text="登录中..."
+    >
     <h3 class="title">系统登录</h3>
     <el-form-item prop="account">
       <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="账号"></el-input>
@@ -40,14 +43,19 @@
         this.$refs.ruleForm2.resetFields();
       },
       handleSubmit2(ev) {
-        this.$refs.ruleForm2.validate((valid) => {
+        this.logining = true;
+        this.$refs.ruleForm2.validate(async (valid) => {
           if (valid) {
             console.log(this.ruleForm2);
-            axios.post('/users/login',{account:this.ruleForm2.account,pass:this.ruleForm2.checkPass})
-              .then(res => {
-                  console.log(res.data);
-                  this.$router.push({path:'/'});
-              });
+            try {
+              const data = await axios.post('/users/login',{account:this.ruleForm2.account,checkPass:this.ruleForm2.checkPass});
+              console.log(data);
+              this.$router.push({path:'/'});
+            } catch (error) {
+              console.log(error);
+            } finally{
+              this.logining = false;
+            }
           } else {
             console.log('error submit!!');
             return false;
@@ -61,7 +69,6 @@
 
 <style lang="scss" scoped>
   .login-container {
-    /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
     -webkit-border-radius: 5px;
     border-radius: 5px;
     -moz-border-radius: 5px;
