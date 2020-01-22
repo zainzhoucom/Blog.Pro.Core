@@ -67,7 +67,7 @@ namespace Blog.Manage
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseVueCli(npmScript: "serve");
+                    spa.UseVueCli(npmScript: "dev");
                 }
 
             });
